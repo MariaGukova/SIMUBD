@@ -1,0 +1,37 @@
+
+db.help()
+db.stats()
+
+db.createCollection("students", {capped: true, size: 6000})
+show collections 
+db.getCollectionNames()
+
+db.students.renameCollection("users")
+
+db.users.stats()
+
+use kaba
+
+db.users.insert({"name": "Masha", "age": 20})
+
+db.users.find({name: "Masha", age: 20})
+
+db.users.find().limit(3)
+
+db.users.find({name: "Masha"}, {age: 1})
+
+db.users.find().sort({ $natural: -1 }).limit(5)
+
+db.users.find ({age: {$lt : 21}})
+
+db.users.find ({age: {$gt : 25, $lt: 40}})
+
+db.users.find ({$or : [{name: "Masha"}, {age: 27}]})
+
+db.users.find ({age: {$in : [20, 32]}})
+
+db.users.find ({age: {$ne : 22}})
+
+db.users.find ({name: {$regex:"K"}})
+
+db.users.find ({work: {$exists:true}})
