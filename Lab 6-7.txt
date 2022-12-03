@@ -1,0 +1,53 @@
+db.users.insert({"name": "Masha", "age": 20, company: {"name":"EPAM", "country":"Belarus"}})
+
+db.users.find({"company.name": "EPAM"})
+
+function name(a,b,c) {return a*b*c;}
+name(4,5,6)
+
+fn = function() { return this.name=="Masha"; }
+db.users.find(fn)
+
+var cursor = db.users.find(); null;
+while(cursor.hasNext()){obj = cursor.next();print(obj["name"]);}
+
+var cursor = db.users.find();null;
+cursor.sort({age:1}).limit(2);null;
+cursor.forEach(function(obj){print(obj.name),print(obj.age);})
+
+db.users.find({name: "Alex"}).count()
+
+db.users.find({age: {$gt : 25, $lt: 40}}).count()
+
+db.users.distinct("name")
+
+db.users.aggregate({"$group":{_id:"$name",count:{$sum:1}}})
+
+db.users.update({name : "Vova"},{$set: {name: "Vova", age : 57, check: "check"}}, {multi:true})
+
+db.users.update({name : "Vova"}, {$unset: {check: 1}})
+
+db.users.update({name : "Lera"}, {$addToSet: {lan: "english"}})
+
+db.users.update({name : "Lera"}, {$pull: {lan: "english"}})
+
+db.users.remove({name : "Vova"}, true)
+
+db.users.remove({age: {$lt : 15}})
+
+db.companies.insert({"_id" : "microsoft", year: 1974})
+
+db.workers.insert({name: "Tom", age: 28, company: "microsoft"})
+
+user = db.workers.findOne()
+
+db.companies.findOne({_id: user.company})
+
+db.countries.insert({_id:"us", name:"US"})
+
+db.workers.update({_id:ObjectId("63756943e5b98fcf2259070f")},{$set:
+        {country:{$ref:"countries", $id: "us"}}})
+
+var tom=db.workers.findOne({"_id":ObjectId("63756943e5b98fcf2259070f")})
+
+db.countries.findOne({_id:tom.country.$id})
